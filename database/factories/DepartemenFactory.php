@@ -21,7 +21,7 @@ class DepartemenFactory extends Factory
     {
         return [
             'kode' => strtoupper(fake()->unique()->lexify('??')),
-            'nama' => 'Departemen ' . fake()->words(2, true),
+            'nama' => 'Departemen '.fake()->words(2, true),
         ];
     }
 }

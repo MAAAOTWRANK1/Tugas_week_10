@@ -22,8 +22,8 @@ class DosenFactory extends Factory
     {
         return [
             'nip' => fake()->unique()->numerify('19################'),
-            'nama' => 'Dr. ' . fake()->name(),
-            'email' => fake()->unique()->userName() . '@its.ac.id',
+            'nama' => 'Dr. '.fake()->name(),
+            'email' => fake()->unique()->userName().'@its.ac.id',
             'departemen_id' => Departemen::factory(),
         ];
     }

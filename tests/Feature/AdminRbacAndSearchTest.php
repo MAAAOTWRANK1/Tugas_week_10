@@ -228,7 +228,7 @@ class AdminRbacAndSearchTest extends TestCase
         for ($i = 1; $i <= 15; $i++) {
             Mahasiswa::create([
                 'nrp' => sprintf('50252110%02d', $i),
-                'nama' => 'Mahasiswa Filter ' . $i,
+                'nama' => 'Mahasiswa Filter '.$i,
                 'email' => "mhs{$i}@mhs.its.ac.id",
                 'departemen_id' => $deptIf->id,
                 'is_active' => true,
@@ -245,8 +245,23 @@ class AdminRbacAndSearchTest extends TestCase
         $content = $response->getContent();
 
         $this->assertStringContainsString('search=Filter', $content);
-        $this->assertStringContainsString('departemen_id=' . $deptIf->id, $content);
+        $this->assertStringContainsString('departemen_id='.$deptIf->id, $content);
         $this->assertStringContainsString('is_active=1', $content);
         $this->assertStringContainsString('page=2', $content);
+    }
+
+    public function test_quick_login_buttons_appear_only_in_local_environment(): void
+    {
+        $this->app['env'] = 'local';
+        $localResponse = $this->get('/login');
+        $localResponse->assertStatus(200);
+        $localResponse->assertSee('Masuk sebagai admin');
+        $localResponse->assertSee('Masuk sebagai staf');
+
+        $this->app['env'] = 'production';
+        $prodResponse = $this->get('/login');
+        $prodResponse->assertStatus(200);
+        $prodResponse->assertDontSee('Masuk sebagai admin');
+        $prodResponse->assertDontSee('Masuk sebagai staf');
     }
 }

@@ -39,7 +39,7 @@ class TugasFactory extends Factory
         ];
 
         return [
-            'judul' => fake()->randomElement($judulPrefix) . ' ' . fake()->words(2, true),
+            'judul' => fake()->randomElement($judulPrefix).' '.fake()->words(2, true),
             'deskripsi' => fake()->sentence(12),
             'mata_kuliah' => fake()->randomElement($mataKuliahList),
             'tenggat' => fake()->dateTimeBetween('+1 days', '+30 days'),

@@ -24,7 +24,7 @@ class MahasiswaFactory extends Factory
         return [
             'nrp' => fake()->unique()->numerify('50252#####'),
             'nama' => fake()->name(),
-            'email' => fake()->unique()->userName() . '@mhs.its.ac.id',
+            'email' => fake()->unique()->userName().'@mhs.its.ac.id',
             'departemen_id' => Departemen::factory(),
             'dosen_id' => Dosen::factory(),
             'is_active' => fake()->boolean(85),
