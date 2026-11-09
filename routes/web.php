@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\MahasiswaController;
+use App\Http\Controllers\Admin\TugasController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +36,23 @@ Route::middleware(['auth', 'role:admin|staf'])
         Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
         Route::get('/mahasiswa/{mahasiswa}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
         Route::put('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
+        Route::delete('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'destroy'])
+            ->middleware('permission:hapus-mahasiswa')
+            ->name('mahasiswa.destroy');
+
+        Route::get('/dosen', [DosenController::class, 'index'])->name('dosen.index');
+        Route::delete('/dosen/{dosen}', [DosenController::class, 'destroy'])
+            ->middleware('permission:hapus-dosen')
+            ->name('dosen.destroy');
+
+        Route::get('/tugas', [TugasController::class, 'index'])->name('tugas.index');
+        Route::get('/tugas/create', [TugasController::class, 'create'])->name('tugas.create');
+        Route::post('/tugas', [TugasController::class, 'store'])->name('tugas.store');
+        Route::get('/tugas/{tugas}/edit', [TugasController::class, 'edit'])->name('tugas.edit');
+        Route::put('/tugas/{tugas}', [TugasController::class, 'update'])->name('tugas.update');
+        Route::delete('/tugas/{tugas}', [TugasController::class, 'destroy'])
+            ->middleware('permission:hapus-tugas')
+            ->name('tugas.destroy');
     });
 
 Route::middleware('auth')->group(function () {

@@ -83,4 +83,16 @@ class MahasiswaController extends Controller
             ->route('admin.mahasiswa.index')
             ->with('success', 'Perubahan data mahasiswa disimpan.');
     }
+
+    /**
+     * Hapus data mahasiswa (dikunci oleh middleware permission:hapus-mahasiswa).
+     */
+    public function destroy(Mahasiswa $mahasiswa): RedirectResponse
+    {
+        $mahasiswa->delete();
+
+        return redirect()
+            ->route('admin.mahasiswa.index')
+            ->with('success', 'Mahasiswa dihapus.');
+    }
 }

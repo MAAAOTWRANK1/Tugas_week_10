@@ -108,11 +108,67 @@
                                     @endif
                                 </td>
                                 <td class="text-right">
-                                    @can('edit-mahasiswa')
-                                        <a href="{{ route('admin.mahasiswa.edit', $mahasiswa) }}" class="link-action-edit">
-                                            Ubah
-                                        </a>
-                                    @endcan
+                                    <div class="d-inline-flex align-items-center justify-content-end">
+                                        @can('edit-mahasiswa')
+                                            <a href="{{ route('admin.mahasiswa.edit', $mahasiswa) }}" class="link-action-edit mr-2">
+                                                Ubah
+                                            </a>
+                                        @endcan
+
+                                        @can('hapus-mahasiswa')
+                                            <button
+                                                type="button"
+                                                class="btn btn-danger btn-sm"
+                                                data-toggle="modal"
+                                                data-target="#modalHapusMahasiswa-{{ $mahasiswa->id }}"
+                                            >
+                                                Hapus mahasiswa
+                                            </button>
+
+                                            <div
+                                                class="modal fade text-left"
+                                                id="modalHapusMahasiswa-{{ $mahasiswa->id }}"
+                                                tabindex="-1"
+                                                role="dialog"
+                                                aria-labelledby="labelHapusMahasiswa-{{ $mahasiswa->id }}"
+                                                aria-hidden="true"
+                                            >
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title font-weight-bold" id="labelHapusMahasiswa-{{ $mahasiswa->id }}">
+                                                                Hapus mahasiswa ini?
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Batal">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p class="mb-1">Data yang dihapus tidak bisa dikembalikan.</p>
+                                                            <p class="text-secondary-academic mb-0">Mahasiswa: <strong>{{ $mahasiswa->nama }} ({{ $mahasiswa->nrp }})</strong></p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button
+                                                                type="button"
+                                                                class="btn btn-secondary-outline btn-cancel-focus"
+                                                                data-dismiss="modal"
+                                                                autofocus
+                                                            >
+                                                                Batal
+                                                            </button>
+                                                            <form method="POST" action="{{ route('admin.mahasiswa.destroy', $mahasiswa) }}" class="d-inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger">
+                                                                    Hapus mahasiswa
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endcan
+                                    </div>
                                 </td>
                             </tr>
                         @empty
@@ -138,4 +194,12 @@
             </div>
         @endif
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).on('shown.bs.modal', '.modal', function () {
+            $(this).find('.btn-cancel-focus').trigger('focus');
+        });
+    </script>
 @endsection
