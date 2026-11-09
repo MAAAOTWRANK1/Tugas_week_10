@@ -44,4 +44,35 @@
             </x-primary-button>
         </div>
     </form>
+
+    @if (app()->environment('local'))
+        <div class="mt-6 pt-4 border-t border-gray-200" data-testid="local-quick-login">
+            <p class="text-xs text-gray-500 text-center mb-3">Hanya untuk demo lokal</p>
+            <div class="flex flex-col sm:flex-row gap-2 justify-center">
+                <form method="POST" action="{{ route('login') }}" class="w-full sm:w-auto">
+                    @csrf
+                    <input type="hidden" name="email" value="admin@example.test">
+                    <input type="hidden" name="password" value="password">
+                    <button
+                        type="submit"
+                        class="w-full inline-flex justify-center items-center px-4 py-2 bg-slate-800 border border-transparent rounded-md font-semibold text-xs text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-600"
+                    >
+                        Masuk sebagai admin
+                    </button>
+                </form>
+
+                <form method="POST" action="{{ route('login') }}" class="w-full sm:w-auto">
+                    @csrf
+                    <input type="hidden" name="email" value="staf@example.test">
+                    <input type="hidden" name="password" value="password">
+                    <button
+                        type="submit"
+                        class="w-full inline-flex justify-center items-center px-4 py-2 bg-white border border-teal-700 rounded-md font-semibold text-xs text-teal-800 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-600"
+                    >
+                        Masuk sebagai staf
+                    </button>
+                </form>
+            </div>
+        </div>
+    @endif
 </x-guest-layout>
