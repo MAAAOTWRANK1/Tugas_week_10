@@ -45,4 +45,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Deskripsi peran untuk ditampilkan di menu pengguna AdminLTE.
+     */
+    public function adminlte_desc(): string
+    {
+        if ($this->hasRole('admin')) {
+            return 'Admin';
+        }
+
+        if ($this->hasRole('staf')) {
+            return 'Staf';
+        }
+
+        return 'Pengguna';
+    }
 }
